@@ -14,8 +14,8 @@ namespace OKS_Tomasos.Controllers
 {
     public class RegisterController : Controller
     {
-        private DbConnection _Connection;
-        public RegisterController(DbConnection conn)
+        private RegisterConnection _Connection;
+        public RegisterController(RegisterConnection conn)
         {
             _Connection = conn;
         }
@@ -31,8 +31,8 @@ namespace OKS_Tomasos.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Registration(Kunder K)
           {
-            var Validate = new Validation();
-            if ((ModelState.IsValid || !ModelState.IsValid) && (!Validate.ValidateKund(K, _Connection.GetAllKunder().ToList())))
+            var Validate = new RegisterValidation();
+            if ((ModelState.IsValid || !ModelState.IsValid) && (!Validate.ValidateRegister(K, _Connection.GetAllKunder().ToList())))
             {
                 ModelState.AddModelError("Kund.AnvandarNamn", "Användarnamn taget");
                 return View(K);

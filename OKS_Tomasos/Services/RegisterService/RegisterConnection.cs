@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace OKS_Tomasos.Services.RegisterService
 {
-    public class DbConnection
+    public class RegisterConnection
     {
 
         private IRepository _Connection;
-        public DbConnection(IRepository repo)
+        public RegisterConnection(IRepository repo)
         {
             //Injectar repot (uppsatt i startup- configureservices dvs vår DI Container)
             _Connection = repo;
@@ -27,8 +27,8 @@ namespace OKS_Tomasos.Services.RegisterService
         public bool AddRegistration(Kunder K)
         {
             var Kunder = _Connection.GetAllKunder();
-            var Validate = new Validation();
-            if (Validate.ValidateKund(K, Kunder))
+            var Validate = new RegisterValidation();
+            if (Validate.ValidateRegister(K, Kunder))
             {
                 _Connection.AddRegistration(K);
                 return true;

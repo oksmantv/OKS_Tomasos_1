@@ -33,7 +33,8 @@ namespace OKS_Tomasos
             services.AddMvc(options => options.EnableEndpointRouting = false);
             //services.AddControllersWithViews();
             services.AddTransient<IRepository, Repository>();
-            services.AddTransient<DbConnection>();
+            services.AddTransient<RegisterConnection>();
+            services.AddTransient<LoginConnection>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -5,27 +5,29 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using OKS_Tomasos.Models;
+using OKS_Tomasos.Repositories;
 using OKS_Tomasos.Services.RegisterService;
 using OKS_Tomasos.ViewModels;
 
 namespace OKS_Tomasos.Services.RegisterService
 {
-    public class Validation
+
+    public class LoginValidation
     {
-        public bool ValidateKund(Kunder K,List<Kund> Kunder)
+        public bool ValidateLogin(Kunder K,List<Kund> Kunder)
         {
-            //var Email = K.Kund.Email;
             var Anvandarnamn = K.Kund.AnvandarNamn;
+            var Losenord = K.Kund.Losenord;
 
             var AnvandarnamnCheck = Kunder.Where(k => k.AnvandarNamn == Anvandarnamn).SingleOrDefault();
             if(AnvandarnamnCheck == null)
-            return true;
-
-            //var EmailCheck = Kunder.Where(k => k.Email == Email).SingleOrDefault();
-            //if (EmailCheck == null)
-            //return true;
-
             return false;
+
+            var LosenordCheck = Kunder.Where(k => k.AnvandarNamn == Anvandarnamn).Where(p => p.Losenord == Losenord).SingleOrDefault();
+            if(LosenordCheck == null)
+            return false;
+
+            return true;
         }
 
     }
