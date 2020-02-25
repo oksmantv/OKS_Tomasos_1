@@ -1,0 +1,39 @@
+﻿@model OKS_Tomasos.ViewModels.Kunder
+
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div style="padding: 20px" ; class="col-sm-12">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+            </div>
+            <div class="col-sm-8" style="text-align:center">
+                <form asp-controller="Login" asp-action="Login" method="post">
+                    <table>
+                        <tr>
+                            <td><label asp-for="Kund.AnvandarNamn"></label></t>
+                            <td><input id="username" style="float:left" type="text" asp-for="Kund.AnvandarNamn" size="30" value="" /></td>
+                            <td><span id="status" class="text-danger" style="float:left;" asp-validation-for="Kund.AnvandarNamn"></span></td>
+                        </tr>
+                        <tr>
+                            <td><label asp-for="Kund.Losenord"></label></td>
+                            <td><input style="float:left" type="text" asp-for="Kund.Losenord" size="30" value="" /></td>
+                            <td><span class="text-danger" style="float:left;" asp-validation-for="Kund.Losenord"></span></td>
+                        </tr>
+                        <tr>
+                            <td><input id="Login" type="submit" value="Login" /></td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

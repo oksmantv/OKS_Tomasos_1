@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Tomasos</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Tomasos">
+    <meta name="keywords" content="Tomasos">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Favicon -->
+    <link href="~/img/favicon.ico" rel="shortcut icon" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="~/css/bootstrap.min.css" />
+    @*<link rel="stylesheet" href="~/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="~/css/flaticon.css" />
+        <link rel="stylesheet" href="~/css/owl.carousel.css" />*@
+    <link rel="stylesheet" href="~/css/style.css" />
+    @*<link rel="stylesheet" href="~/css/animate.css" />*@
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" asp-controller="Home" asp-action="Index">Tomasos<span>.</span></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Order Food
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" asp-controller="Menu" asp-action="Menu">Menu</a>
+                    </div>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0" asp-controller="Home" asp-action="Index" method="post">
+                <button class="btn btn-outline-success my-2 my-sm-0" asp-controller="Login" asp-action="Login" formmethod="get">Login</button>
+                <button class="btn btn-outline-success my-2 my-sm-0" asp-controller="Register" asp-action="Registration" formmethod="get">Register</button>
+            </form>
+        </div>
+    </nav>
+    <main role="main" class="pb-3">
+        @RenderBody()
+    </main>
+    @*@RenderSection("Scripts", required: false)*@
+</body>
+</html>
+
+<!--====== Javascripts & Jquery ======-->
+<script src="~/js/jquery-3.2.1.min.js"></script>
+<script src="~/js/bootstrap.min.js"></script>
+@*<script src="~/js/owl.carousel.min.js"></script>
+    <script src="~/js/circle-progress.min.js"></script>*@
+<script src="~/js/main.js"></script>
