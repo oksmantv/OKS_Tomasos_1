@@ -1,4 +1,5 @@
-﻿using OKS_Tomasos.Models;
+﻿using Microsoft.AspNetCore.Http;
+using OKS_Tomasos.Models;
 using OKS_Tomasos.Repositories;
 using OKS_Tomasos.ViewModels;
 using System;
@@ -6,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace OKS_Tomasos.Services.RegisterService
+namespace OKS_Tomasos.Services.LoginService
 {
     public class LoginConnection
     {
@@ -21,11 +22,6 @@ namespace OKS_Tomasos.Services.RegisterService
         {
 
             return _Connection.GetAllKunder();
-        }
-        public bool Login(Kunder K)
-        {
-            return true;
-
         }
 
     }

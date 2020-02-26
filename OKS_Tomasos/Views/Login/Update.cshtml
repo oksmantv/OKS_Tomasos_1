@@ -1,5 +1,5 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@model  OKS_Tomasos.ViewModels.Kunder
+@model OKS_Tomasos.ViewModels.Kunder
 
 <!DOCTYPE html>
 <html lang="zxx">
@@ -17,51 +17,52 @@
             <div class="col-sm-2">
             </div>
             <div class="col-sm-8" style="text-align:center">
-                <form asp-controller="Register" asp-action="Registration" method="post">
+                <form asp-controller="Login" asp-action="Update" method="post">
                     <table>
                         <tr>
-                            <td><label asp-for="Kund.AnvandarNamn"></label></t>
-                            @Html.ValidationMessage("UserError")
-                            @Html.ValidationSummary(true)
-                            <td><input id="username" style="float:left" type="text" asp-for="Kund.AnvandarNamn" size="30" value="" /></td>
+                            <td>
+                                <label asp-for="Kund.AnvandarNamn"></label></t>
+                                @Html.ValidationMessage("UserError")
+                                @Html.ValidationSummary(true)
+                            <td><input id="username" style="float:left" type="text" asp-for="Kund.AnvandarNamn" size="30" value="@Model.Kund.AnvandarNamn" /></td>
                             <td><span id="status" class="text-danger" style="float:left;" asp-validation-for="Kund.AnvandarNamn"></span></td>
                         </tr>
                         <tr>
                             <td><label asp-for="Kund.Losenord"></label></td>
-                            <td><input style="float:left" type="text" asp-for="Kund.Losenord" size="30" value="" /></td>
+                            <td><input style="float:left" type="text" asp-for="Kund.Losenord" size="30" value="@Model.Kund.Losenord" /></td>
                             <td><span class="text-danger" style="float:left;" asp-validation-for="Kund.Losenord"></span></td>
                         </tr>
                         <tr>
                             <td><label asp-for="Kund.Namn"></label></td>
-                            <td><input style="float:left" type="text" asp-for="Kund.Namn" size="30" value="" /></td>
+                            <td><input style="float:left" type="text" asp-for="Kund.Namn" size="30" value="@Model.Kund.Namn" /></td>
                             <td><span class="text-danger" style="float:left;" asp-validation-for="Kund.Namn"></span></td>
                         </tr>
                         <tr>
                             <td><label asp-for="Kund.Email"></label></td>
-                            <td><input style="float:left" type="text" asp-for="Kund.Email" size="30" value="" /></td>
+                            <td><input style="float:left" type="text" asp-for="Kund.Email" size="30" value="@Model.Kund.Email" /></td>
                             <td><span class="text-danger" style="float:left;" asp-validation-for="Kund.Email"></span></td>
                         </tr>
                         <tr>
                             <td><label asp-for="Kund.Telefon"></label></td>
-                            <td><input style="float:left" type="text" asp-for="Kund.Telefon" size="30" value="" /></td>
+                            <td><input style="float:left" type="text" asp-for="Kund.Telefon" size="30" value="@Model.Kund.Telefon" /></td>
                             <td><span class="text-danger" style="float:left;" asp-validation-for="Kund.Telefon"></span></td>
                         </tr>
                         <tr>
                             <td><label asp-for="Kund.Gatuadress"></label></td>
-                            <td><input style="float:left" type="text" asp-for="Kund.Gatuadress" size="30" value="" /></td>
+                            <td><input style="float:left" type="text" asp-for="Kund.Gatuadress" size="30" value="@Model.Kund.Gatuadress" /></td>
                             <td><span class="text-danger" style="float:left;" asp-validation-for="Kund.Gatuadress"></span></td>
                         </tr>
                         <tr>
                             <td><label asp-for="Kund.Postnr"></label></td>
-                            <td><input style="float:left" type="text" asp-for="Kund.Postnr" size="30" value="" /></td>
+                            <td><input style="float:left" type="text" asp-for="Kund.Postnr" size="30" value="@Model.Kund.Postnr" /></td>
                             <td><span class="text-danger" style="float:left;" asp-validation-for="Kund.Postnr"></span></td>
                         </tr>
                         <tr>
                             <td><label asp-for="Kund.Postort"></label></td>
-                            <td><input style="float:left" type="text" asp-for="Kund.Postort" size="30" value="" /></td>
+                            <td><input style="float:left" type="text" asp-for="Kund.Postort" size="30" value="@Model.Kund.Postort" /></td>
                             <td><span class="text-danger" style="float:left;" asp-validation-for="Kund.Postort"></span></td>
                         </tr>
-                        <tr><td><input id="Register" type="submit" value="Register"/></td></tr>
+                        <tr><td><input id="Register" type="submit" value="Update Account" /></td></tr>
 
                     </table>
 

@@ -1,34 +1,66 @@
-﻿<!DOCTYPE html>
+﻿@model OKS_Tomasos.ViewModels.Matratter
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.AspNetCore.Http;
+@using OKS_Tomasos.ViewModels;
+@using Newtonsoft.Json;
+
+@{
+    int intCheck = 0;
+    var text = "";
+}
+
+<!DOCTYPE html>
 <html lang="zxx">
 <head>
-    <title>Tomasos</title>
-    <meta charset="UTF-8">
-    <meta name="description" content="Tomasos">
-    <meta name="keywords" content="Tomasos
-          ">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Favicon -->
-    <link href="~/img/favicon.ico" rel="shortcut icon" />
-
-    <!-- Stylesheets -->
-    <link rel="stylesheet" href="~/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/font-awesome.min.css" />
-    <link rel="stylesheet" href="~/css/flaticon.css" />
-    <link rel="stylesheet" href="~/css/owl.carousel.css" />
-    <link rel="stylesheet" href="~/css/style.css" />
-    <link rel="stylesheet" href="~/css/animate.css" />
-
-
 </head>
+
 <body>
+    <div class="container">
+        <div class="row">
+            <div style="padding: 20px" ; class="col-sm-12">
+            </div>
+        </div>
 
-    <!--====== Javascripts & Jquery ======-->
-    <script src="~/js/jquery-3.2.1.min.js"></script>
-    <script src="~/js/bootstrap.min.js"></script>
-    <script src="~/js/owl.carousel.min.js"></script>
-    <script src="~/js/circle-progress.min.js"></script>
-    <script src="~/js/main.js"></script>
+        <div class="row">
+            <div class="col-sm-5">
+                @foreach (var M in Model.MatratterList)
+                {
+                    <div class="card" style="width: 27rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">@M.MatrattNamn</h5>
+                            <p class="card-text">
+                                @M.Beskrivning - @M.Pris Kr
+                                <br />Kategori: @Model.MatrattTyper.Where(x => x.MatrattTyp1 == @M.MatrattTyp).SingleOrDefault().Beskrivning
+                                @{ var Produkter = Model.MatrattProdukter.Where(x => x.MatrattId == M.MatrattId).ToList(); }
+                            <p class="card-text">
+                                Ingredienter:
+                                @foreach (var P in Produkter)
+                                {
+                                    intCheck++;
+                                    if (intCheck == Produkter.Count)
+                                    {
+                                        text = P.Produkt.ProduktNamn.ToString();
+                                        @text
+                                    }
+                                    else
+                                    {
+                                        { text = P.Produkt.ProduktNamn.ToString() + ", "; }
+                                        @text
+                                    }
+                                }
+                            </p>
+                            <br />
+                            <a href="#" class="btn btn-primary">Lägg till i Varukorg</a>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="col-sm-2">
+            </div>
+            <div class="col-sm-5" style="text-align:center">
 
-
+            </div>
+        </div>
+    </div>
 </body>
 </html>
