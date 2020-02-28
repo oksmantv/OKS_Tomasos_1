@@ -57,7 +57,7 @@ namespace OKS_Tomasos.Controllers
         [HttpGet]
         public IActionResult Logout()
         {
-            HttpContext.Session.SetString("UserLoggedIn", "0");
+            HttpContext.Session.Clear();
             return RedirectToAction("Index", "Home");
         }
 
@@ -74,10 +74,10 @@ namespace OKS_Tomasos.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Update(Kunder K)
         {
+            var UserID = HttpContext.Session.GetString("UserID");
 
             var Validate = new RegisterValidation();
-
-            if (_Connection.GetAllKunder().Where(x => x.AnvandarNamn == K.Kund.AnvandarNamn).SingleOrDefault().AnvandarNamn == K.Kund.AnvandarNamn)
+            if (_Connection.GetAllKunder().Where(x => x.KundId == Convert.ToInt32(UserID)).SingleOrDefault().AnvandarNamn != K.Kund.AnvandarNamn)
             {
                 if ((ModelState.IsValid || !ModelState.IsValid) && (!Validate.ValidateRegister(K, _Connection.GetAllKunder().ToList())))
                 {

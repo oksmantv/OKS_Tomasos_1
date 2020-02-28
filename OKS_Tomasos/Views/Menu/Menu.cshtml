@@ -50,7 +50,7 @@
                                 }
                             </p>
                             <br />
-                            <a href="#" class="btn btn-primary">Lägg till i Varukorg</a>
+                            <a asp-controller="Menu" asp-action="AddProduct" asp-route-id="@M.MatrattId" class="btn btn-primary">Lägg till i Varukorg</a>
                         </div>
                     </div>
                 }
@@ -58,7 +58,27 @@
             <div class="col-sm-2">
             </div>
             <div class="col-sm-5" style="text-align:center">
+                <div class="card" style="width: 27rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Beställning</h5>
+                        @{int Sum = 0;}
+                        @foreach (var B in Model.BestallningList)
+                        {
+                            Sum = Sum + B.Pris;
+                            <p class="card-text">@B.MatrattNamn - @B.Pris Kr</p>
+                        }
+                        @if (Sum != 0)
+                        {
+                            <p>Summa: @Sum</p>
+                        }
 
+                        @if(Model.BestallningList.Count > 0)
+                        {
+                            <a asp-controller="Menu" asp-action="Checkout" class="btn btn-primary">Beställ</a>
+                        }
+                        
+                    </div>
+                </div>
             </div>
         </div>
     </div>

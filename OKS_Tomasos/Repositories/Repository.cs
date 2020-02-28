@@ -13,6 +13,7 @@ namespace OKS_Tomasos.Repositories
     public interface IRepository
     {
         void AddRegistration(Kunder K);
+        void AddBestallning(Bestallning B);
         void UpdateKund(Kunder K,string Json);
         List<Kund> GetAllKunder();
         List<Matratt> GetMatratter();
@@ -36,7 +37,22 @@ namespace OKS_Tomasos.Repositories
             _Repository = context;
         }
 
-  
+        public void AddBestallning(Bestallning B)
+        {
+            B.Kund = null;
+
+            foreach (var BM in B.BestallningMatratt)
+            {
+                BM.Matratt = null;
+               _Repository.BestallningMatratt.Add(BM);
+            }
+
+            B.BestallningMatratt = null;
+
+
+            _Repository.Bestallning.Add(B);
+            _Repository.SaveChanges();
+        }
         public void AddRegistration(Kunder K)
         {
 
@@ -62,7 +78,7 @@ namespace OKS_Tomasos.Repositories
 
         public List<Kund> GetAllKunder() 
         {
-            return(_Repository.Kund.ToList());
+               return(_Repository.Kund.ToList());
         
         }
 

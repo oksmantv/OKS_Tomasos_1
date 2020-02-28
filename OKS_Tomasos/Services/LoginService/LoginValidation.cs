@@ -44,6 +44,7 @@ namespace OKS_Tomasos.Services.LoginService
             var jsonList = JsonConvert.SerializeObject(Kund);
 
             //Lägg in JSON strängen i sessionsvariabeln
+            Session.SetString("UserID", Kund.KundId.ToString());
             Session.SetString("UserAccount", jsonList);
         }
 

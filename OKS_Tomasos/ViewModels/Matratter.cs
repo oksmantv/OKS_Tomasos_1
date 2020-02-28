@@ -10,28 +10,23 @@ namespace OKS_Tomasos.ViewModels
     {
         public Matratter()
         {
-            Kund = new Kund();
-            Bestallning = new Bestallning();
-            Matratt = new Matratt();
             MatratterList = new List<Matratt>();
-            MatrattTyp = new MatrattTyp();
             MatrattTyper = new List<MatrattTyp>();
-            MatrattProdukt = new MatrattProdukt();
             MatrattProdukter = new List<MatrattProdukt>();
             Produkt = new List<Produkt>();
+            BestallningList = new List<Matratt>();
+            BestallningMatrattList = new List<BestallningMatratt>();
         }
-        public Kund Kund { get; set; }
-        public Matratt Matratt { get; set; }
-        public Bestallning Bestallning { get; set; }
-        public MatrattTyp MatrattTyp { get; set; }
-        public MatrattProdukt MatrattProdukt { get; set; }
 
         public List<MatrattProdukt> MatrattProdukter { get; set; }
         public List<Produkt> Produkt { get; set; }
 
+        public List<Matratt> BestallningList { get; set; }
+
         public List<MatrattTyp> MatrattTyper { get; set; }
         public List<Matratt> MatratterList { get; set; }
 
-        public virtual MatrattTyp MatrattTypNavigation { get; set; }
+        public List<BestallningMatratt> BestallningMatrattList { get; set; }
+
     }
 }

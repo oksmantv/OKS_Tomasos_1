@@ -1,0 +1,53 @@
+﻿@model OKS_Tomasos.Models.Bestallning
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.AspNetCore.Http;
+@using OKS_Tomasos.ViewModels;
+@using Newtonsoft.Json;
+
+
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div style="padding: 20px" ; class="col-sm-12">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-2">
+            </div>
+            <div class="col-sm-8">
+                <div class="card" style="width: 32rem;">
+                    <div class="card-body">
+
+                        <h5 class="card-title">Din Beställning</h5>
+                        <p class="card-text">
+                        <p   >Beställnings Datum: @Model.BestallningDatum</p>
+                        <p>Leverans Tid: @Model.BestallningDatum.AddHours(1)</p>
+                        <p>Kund: @Model.Kund.Namn</p>
+                        <p>Adress: @Model.Kund.Gatuadress, @Model.Kund.Postnr @Model.Kund.Postort</p>
+                        <p>Contact Information: @Model.Kund.Telefon @Model.Kund.Email</p>
+                        <br />
+                        <br />
+                        <p>Detaljer:</p>
+                        @foreach (var V in Model.BestallningMatratt)
+                        {
+                            var Pris = (V.Matratt.Pris * V.Antal);
+                            <p>@V.Matratt.MatrattNamn - @V.Matratt.Pris * @V.Antal   @Pris Kr</p>
+                        }
+                        <p>Summa: @Model.Totalbelopp Kr</p>
+                        </p>
+                        <a asp-controller="Menu" asp-action="OrderDone" class="btn btn-primary" type="submit">Bekräfta Beställning</a>
+                    </div>
+                    </div>
+                </div>
+                <div class="col-sm-2" style="text-align:center">
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
