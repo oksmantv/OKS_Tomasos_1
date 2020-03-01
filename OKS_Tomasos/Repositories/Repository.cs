@@ -14,18 +14,15 @@ namespace OKS_Tomasos.Repositories
     {
         void AddRegistration(Kunder K);
         void AddBestallning(Bestallning B);
-        void UpdateKund(Kunder K,Kund Json);
+        void UpdateKund(Kunder K, Kund Json);
+
+        Kund GetKund(int id);
+        Kund FindKund(string name);
+        Matratt GetMatratt(int id);
+        List<MatrattTyp> GetMatrattTyper();
         List<Kund> GetAllKunder();
         List<Matratt> GetMatratter();
         List<Produkt> GetProdukter();
-        Kund GetKund(int id);
-
-        Kund FindKund(string name);
-        Matratt GetMatratt(int id);
-        MatrattTyp GetMatrattTyp(int id);
-        List<MatrattTyp> GetMatrattTyper();
-        MatrattProdukt GetMatrattProdukt(int id);
-
         List<MatrattProdukt> GetMatrattProdukter();
 
     }
@@ -49,6 +46,7 @@ namespace OKS_Tomasos.Repositories
             }
             B.BestallningMatratt = null;
             _Repository.Bestallning.Add(B);
+            _Repository.SaveChanges();
 
             var senast = _Repository.Bestallning.ToList();
             var senastID = senast.OrderByDescending(x => x.BestallningDatum).First().BestallningId;
@@ -59,7 +57,7 @@ namespace OKS_Tomasos.Repositories
                 BestallMat.Antal = BM.Antal;
                 BestallMat.MatrattId = BM.MatrattId;
                 BestallMat.BestallningId = senastID;
-               _Repository.BestallningMatratt.Add(BestallMat);
+                _Repository.BestallningMatratt.Add(BestallMat);
             }
 
             _Repository.SaveChanges();
@@ -84,13 +82,12 @@ namespace OKS_Tomasos.Repositories
                 _Repository.Entry(Original).CurrentValues.SetValues(K.Kund);
                 _Repository.SaveChanges();
             }
-            
+
         }
 
-        public List<Kund> GetAllKunder() 
+        public List<Kund> GetAllKunder()
         {
-               return(_Repository.Kund.ToList());
-        
+            return (_Repository.Kund.ToList());
         }
 
         public List<Matratt> GetMatratter()
@@ -109,7 +106,7 @@ namespace OKS_Tomasos.Repositories
             return (_Repository.Produkt.ToList());
 
         }
-        
+
         public Kund GetKund(int id)
         {
             return (_Repository.Kund.Where(x => x.KundId == id).SingleOrDefault());
@@ -119,22 +116,12 @@ namespace OKS_Tomasos.Repositories
         {
             return (_Repository.Kund.Where(x => x.AnvandarNamn == name).SingleOrDefault());
         }
-        public MatrattProdukt GetMatrattProdukt(int id)
-        {
-            return (_Repository.MatrattProdukt.Where(x => x.MatrattId == id).SingleOrDefault());
-        }
 
         public List<MatrattProdukt> GetMatrattProdukter()
         {
             return (_Repository.MatrattProdukt.ToList());
 
         }
-
-        public MatrattTyp GetMatrattTyp(int id)
-        {
-            return (_Repository.MatrattTyp.Where(x => x.MatrattTyp1 == id).SingleOrDefault());
-        }
-
         public List<MatrattTyp> GetMatrattTyper()
         {
             return (_Repository.MatrattTyp.ToList());

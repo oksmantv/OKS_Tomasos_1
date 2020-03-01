@@ -23,7 +23,6 @@ namespace OKS_Tomasos.Services.LoginService
         private readonly ISession _Session;
         public LoginValidation(IRepository repo, IHttpContextAccessor httpContextAccessor)
         {
-            //Injectar repot (uppsatt i startup- configureservices dvs vår DI Container)
             _Connection = repo;
             _httpContextAccessor = httpContextAccessor;
             _Session = _httpContextAccessor.HttpContext.Session;

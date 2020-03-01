@@ -46,7 +46,6 @@ namespace OKS_Tomasos.Services.MenuService
             {
                 var BM = new BestallningMatratt();
 
-
                 if (B.BestallningMatratt.Where(x => x.MatrattId == V.MatrattId).FirstOrDefault() != null)
                 {
                     B.BestallningMatratt.Where(x => x.MatrattId == V.MatrattId).FirstOrDefault().Antal++;

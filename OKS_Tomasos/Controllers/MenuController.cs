@@ -45,86 +45,12 @@ namespace OKS_Tomasos.Controllers
         [HttpGet]
         public IActionResult Checkout()
         {
-            //var valuesJSON = HttpContext.Session.GetString("Cart");
-            //List<Matratt> MatrattList = JsonConvert.DeserializeObject<List<Matratt>>(valuesJSON);
-
-            //var accountJSON = HttpContext.Session.GetString("UserAccount");
-            //Kund kund = JsonConvert.DeserializeObject<Kund>(accountJSON);
-
-            //Bestallning B = new Bestallning();
-            //int TotalSum = 0;
-
-            //foreach (var V in MatrattList)
-            //{
-            //    var BM = new BestallningMatratt();
-
-
-            //    if (B.BestallningMatratt.Where(x => x.MatrattId == V.MatrattId).FirstOrDefault() != null)
-            //    {
-            //        B.BestallningMatratt.Where(x => x.MatrattId == V.MatrattId).FirstOrDefault().Antal++;
-            //    }
-            //    else
-            //    {       
-            //        BM.Bestallning = B;
-            //        BM.Matratt = V;
-            //        BM.MatrattId = V.MatrattId;
-            //        BM.Antal = 1;
-            //        B.BestallningMatratt.Add(BM);
-            //    }
-                
-            //    TotalSum += V.Pris;
-            //}
-
-            //B.KundId = kund.KundId;
-            //B.Kund = kund;
-            //B.BestallningDatum = DateTime.Now;
-            //B.Levererad = false;
-            //B.Totalbelopp = TotalSum;
-
             return View(_MenuConnection.CreateBestallning());
         }
 
         [HttpGet]
         public IActionResult OrderDone()
         {
-            //var valuesJSON = HttpContext.Session.GetString("Cart");
-            //var accountJSON = HttpContext.Session.GetString("UserAccount");
-
-            //List<Matratt> MatrattList = JsonConvert.DeserializeObject<List<Matratt>>(valuesJSON);
-            //Kund kund = JsonConvert.DeserializeObject<Kund>(accountJSON);
-
-
-            //Bestallning B = new Bestallning();
-            //int TotalSum = 0;
-
-            //foreach (var V in MatrattList)
-            //{
-            //    var BM = new BestallningMatratt();
-
-
-            //    if (B.BestallningMatratt.Where(x => x.MatrattId == V.MatrattId).FirstOrDefault() != null)
-            //    {
-            //        B.BestallningMatratt.Where(x => x.MatrattId == V.MatrattId).FirstOrDefault().Antal++;
-            //    }
-            //    else
-            //    {
-            //        BM.Bestallning = B;
-            //        BM.Matratt = V;
-            //        BM.MatrattId = V.MatrattId;
-            //        BM.Antal = 1;
-            //        B.BestallningMatratt.Add(BM);
-            //    }
-
-            //    TotalSum += V.Pris;
-            //}
-
-            //B.KundId = kund.KundId;
-            //B.Kund = kund;
-            //B.BestallningDatum = DateTime.Now;
-            //B.Levererad = false;
-            //B.Totalbelopp = TotalSum;
-
-           
             _Connection.AddBestallning(_MenuConnection.CreateBestallning());
             HttpContext.Session.Remove("Cart");
             return View();
