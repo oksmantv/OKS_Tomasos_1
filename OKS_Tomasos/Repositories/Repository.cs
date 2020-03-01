@@ -14,11 +14,13 @@ namespace OKS_Tomasos.Repositories
     {
         void AddRegistration(Kunder K);
         void AddBestallning(Bestallning B);
-        void UpdateKund(Kunder K,string Json);
+        void UpdateKund(Kunder K,Kund Json);
         List<Kund> GetAllKunder();
         List<Matratt> GetMatratter();
         List<Produkt> GetProdukter();
         Kund GetKund(int id);
+
+        Kund FindKund(string name);
         Matratt GetMatratt(int id);
         MatrattTyp GetMatrattTyp(int id);
         List<MatrattTyp> GetMatrattTyper();
@@ -40,17 +42,26 @@ namespace OKS_Tomasos.Repositories
         public void AddBestallning(Bestallning B)
         {
             B.Kund = null;
-
+            var BMList = new List<BestallningMatratt>();
             foreach (var BM in B.BestallningMatratt)
             {
-                BM.Matratt = null;
-               _Repository.BestallningMatratt.Add(BM);
+                BMList.Add(BM);
+            }
+            B.BestallningMatratt = null;
+            _Repository.Bestallning.Add(B);
+
+            var senast = _Repository.Bestallning.ToList();
+            var senastID = senast.OrderByDescending(x => x.BestallningDatum).First().BestallningId;
+
+            foreach (var BM in BMList)
+            {
+                var BestallMat = new BestallningMatratt();
+                BestallMat.Antal = BM.Antal;
+                BestallMat.MatrattId = BM.MatrattId;
+                BestallMat.BestallningId = senastID;
+               _Repository.BestallningMatratt.Add(BestallMat);
             }
 
-            B.BestallningMatratt = null;
-
-
-            _Repository.Bestallning.Add(B);
             _Repository.SaveChanges();
         }
         public void AddRegistration(Kunder K)
@@ -60,10 +71,10 @@ namespace OKS_Tomasos.Repositories
             _Repository.SaveChanges();
         }
 
-        public void UpdateKund(Kunder K, string JSon)
+        public void UpdateKund(Kunder K, Kund JSon)
         {
             var Model = new Kunder();
-            Model.Kund = JsonConvert.DeserializeObject<Kund>(JSon);
+            Model.Kund = JSon;
 
             var Original = _Repository.Kund.SingleOrDefault(O => O.KundId == Model.Kund.KundId);
             K.Kund.KundId = Original.KundId;
@@ -104,7 +115,10 @@ namespace OKS_Tomasos.Repositories
             return (_Repository.Kund.Where(x => x.KundId == id).SingleOrDefault());
 
         }
-
+        public Kund FindKund(string name)
+        {
+            return (_Repository.Kund.Where(x => x.AnvandarNamn == name).SingleOrDefault());
+        }
         public MatrattProdukt GetMatrattProdukt(int id)
         {
             return (_Repository.MatrattProdukt.Where(x => x.MatrattId == id).SingleOrDefault());

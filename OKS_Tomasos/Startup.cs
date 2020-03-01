@@ -36,7 +36,7 @@ namespace OKS_Tomasos
             services.AddDbContext<TomasosContext>(options => options.UseSqlServer(conn));
             services.AddTransient<IRepository, Repository>();
             services.AddTransient<RegisterConnection>();
-            services.AddTransient<LoginConnection>();
+            services.AddHttpContextAccessor();
 
             /// Setup Session
             services.AddDistributedMemoryCache(); 

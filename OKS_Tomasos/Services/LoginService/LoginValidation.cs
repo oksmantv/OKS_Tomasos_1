@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using OKS_Tomasos.Models;
 using OKS_Tomasos.Repositories;
 using OKS_Tomasos.Services.RegisterService;
+using OKS_Tomasos.Services.SessionService;
 using OKS_Tomasos.ViewModels;
 
 namespace OKS_Tomasos.Services.LoginService
@@ -18,10 +19,14 @@ namespace OKS_Tomasos.Services.LoginService
     {
 
         private IRepository _Connection;
-        public LoginValidation(IRepository repo)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly ISession _Session;
+        public LoginValidation(IRepository repo, IHttpContextAccessor httpContextAccessor)
         {
             //Injectar repot (uppsatt i startup- configureservices dvs vår DI Container)
             _Connection = repo;
+            _httpContextAccessor = httpContextAccessor;
+            _Session = _httpContextAccessor.HttpContext.Session;
         }
 
         public bool ValidateLogin(Kunder K,List<Kund> Kunder)
@@ -36,16 +41,14 @@ namespace OKS_Tomasos.Services.LoginService
             return true;
         }
 
-        public void CheckLogin(ISession Session, Kunder K)
+        public void CheckLogin(Kunder K)
         {
-            var Kund = _Connection.GetAllKunder().SingleOrDefault(x => x.AnvandarNamn == K.Kund.AnvandarNamn);
-            Session.SetString("UserLoggedIn", "1");
 
-            var jsonList = JsonConvert.SerializeObject(Kund);
+            var Session = new SessionData(_httpContextAccessor);
+            Session.SetSessionLoggedIn();
+            Session.SetSessionKund(_Connection.FindKund(K.Kund.AnvandarNamn));
+            Session.SetSessionKundId(_Connection.FindKund(K.Kund.AnvandarNamn).KundId);
 
-            //Lägg in JSON strängen i sessionsvariabeln
-            Session.SetString("UserID", Kund.KundId.ToString());
-            Session.SetString("UserAccount", jsonList);
         }
 
         public bool ValidatePassword(Kunder K,List<Kund> Kunder)

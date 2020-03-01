@@ -32,7 +32,7 @@ namespace OKS_Tomasos.Controllers
         public IActionResult Registration(Kunder K)
           {
             var Validate = new RegisterValidation();
-            if ((ModelState.IsValid || !ModelState.IsValid) && (!Validate.ValidateRegister(K, _Connection.GetAllKunder().ToList())))
+            if (!Validate.ValidateRegister(K, _Connection.GetAllKunder().ToList()))
             {
                 ModelState.AddModelError("Kund.AnvandarNamn", "Användarnamn taget");
                 return View(K);

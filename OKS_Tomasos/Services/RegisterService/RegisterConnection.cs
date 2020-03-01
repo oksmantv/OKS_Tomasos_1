@@ -34,9 +34,7 @@ namespace OKS_Tomasos.Services.RegisterService
                 return true;
             }
             else
-                return false;
-            
-
+                return false;       
         }
 
     }

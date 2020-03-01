@@ -9,7 +9,7 @@ using OKS_Tomasos.Models;
 using OKS_Tomasos.Repositories;
 using OKS_Tomasos.Services.LoginService;
 using OKS_Tomasos.Services.RegisterService;
-using OKS_Tomasos.Services.UpdateService;
+using OKS_Tomasos.Services.SessionService;
 using OKS_Tomasos.ViewModels;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -19,9 +19,11 @@ namespace OKS_Tomasos.Controllers
     public class LoginController : Controller
     {
         private IRepository _Connection;
-        public LoginController(IRepository conn)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public LoginController(IRepository conn, IHttpContextAccessor httpContextAccessor)
         {
             _Connection = conn;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         [HttpGet]
@@ -29,16 +31,17 @@ namespace OKS_Tomasos.Controllers
         {
             return View();
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Login(Kunder K) 
         {
-            var Validate = new LoginValidation(_Connection);
+            var Validate = new LoginValidation(_Connection,_httpContextAccessor);
             var Kunder = _Connection.GetAllKunder();
 
             if (Validate.ValidateLogin(K, Kunder) && Validate.ValidatePassword(K, Kunder))
             {
-                Validate.CheckLogin(HttpContext.Session, K);
+                Validate.CheckLogin(K);
                 return RedirectToAction("Index", "Home");
 
             }
@@ -65,8 +68,8 @@ namespace OKS_Tomasos.Controllers
         public IActionResult Update()
         {
             var Model = new Kunder();
-            var valuesJSON = HttpContext.Session.GetString("UserAccount");
-            Model.Kund = JsonConvert.DeserializeObject<Kund>(valuesJSON);
+            var Session = new SessionData(_httpContextAccessor);
+            Model.Kund = Session.GetSessionKund();
             return View(Model);
         }
 
@@ -74,23 +77,26 @@ namespace OKS_Tomasos.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Update(Kunder K)
         {
-            var UserID = HttpContext.Session.GetString("UserID");
+            var Session = new SessionData(_httpContextAccessor);
+            var UserID = Session.GetSessionKundId();
 
             var Validate = new RegisterValidation();
-            if (_Connection.GetAllKunder().Where(x => x.KundId == Convert.ToInt32(UserID)).SingleOrDefault().AnvandarNamn != K.Kund.AnvandarNamn)
+
+            if (_Connection.GetKund(UserID).AnvandarNamn != K.Kund.AnvandarNamn)
             {
-                if ((ModelState.IsValid || !ModelState.IsValid) && (!Validate.ValidateRegister(K, _Connection.GetAllKunder().ToList())))
+                if (!Validate.ValidateRegister(K, _Connection.GetAllKunder().ToList()))
                 {
                     ModelState.AddModelError("Kund.AnvandarNamn", "Användarnamn taget");
                     return View(K);
                 }
             }
             if (ModelState.IsValid)
-            {
-                var Json = HttpContext.Session.GetString("UserAccount");
-                _Connection.UpdateKund(K,Json);
-                var Validate2 = new LoginValidation(_Connection);
-                Validate2.CheckLogin(HttpContext.Session, K);
+            {        
+                _Connection.UpdateKund(K,Session.GetSessionKund());
+
+                var LoginValidation = new LoginValidation(_Connection,_httpContextAccessor);
+                LoginValidation.CheckLogin(K);
+
                 return RedirectToAction("Index", "Home");
             }
             else
